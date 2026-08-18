@@ -1,0 +1,36 @@
+@page
+@{
+    ViewData["Title"] = "Dino Game";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dino Game - ASP.NET</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <div class="game-wrapper">
+        <div class="hud">
+            <span id="highScoreLabel">RECORDE: 0</span>
+            <span id="scoreLabel">000000</span>
+        </div>
+
+        <canvas id="gameCanvas" width="800" height="220"></canvas>
+
+        <div id="startMessage" class="overlay-message">
+            Pressione <strong>ESPAÇO</strong> ou toque na tela para começar
+        </div>
+
+        <div id="gameOverMessage" class="overlay-message hidden">
+            FIM DE JOGO<br />
+            <small>Pressione ESPAÇO para tentar novamente</small>
+        </div>
+
+    </div>
+
+    <script src="~/js/game.js"></script>
+</body>
+</html>

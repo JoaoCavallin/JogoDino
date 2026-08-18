@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f7f7;
+    font-family: 'Courier New', monospace;
+}
+
+.game-wrapper {
+    position: relative;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.hud {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #535353;
+    letter-spacing: 2px;
+}
+
+#gameCanvas {
+    display: block;
+    background: #fff;
+    touch-action: manipulation;
+}
+
+.overlay-message {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 18px;
+    color: #535353;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 12px 20px;
+    border-radius: 4px;
+}
+
+.hidden {
+    display: none;
+}
+
+.duck-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    background: #f0f0f0;
+    border: 1px solid #535353;
+    border-radius: 4px;
+    color: #535353;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+}
+
+.duck-button:active {
+    background: #dcdcdc;
+}
