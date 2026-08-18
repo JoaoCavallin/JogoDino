@@ -69,3 +69,38 @@ body {
 .duck-button:active {
     background: #dcdcdc;
 }
+
+@keyframes rainbow-blink {
+    0% {
+        color: #ff0000;
+    }
+
+    16% {
+        color: #ff8800;
+    }
+
+    33% {
+        color: #fff700;
+    }
+
+    50% {
+        color: #00ff2f;
+    }
+
+    66% {
+        color: #00e5ff;
+    }
+
+    83% {
+        color: #d600ff;
+    }
+
+    100% {
+        color: #ff0000;
+    }
+}
+
+#scoreLabel.rainbow-blink {
+    animation: rainbow-blink 5s steps(6) infinite;
+    text-shadow: 0 0 8px currentColor;
+}

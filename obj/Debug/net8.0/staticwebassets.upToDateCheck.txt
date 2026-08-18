@@ -1,2 +1,3 @@
+wwwroot\Assets\Audio\6777.mp3
 wwwroot\css\style.css
 wwwroot\js\game.js

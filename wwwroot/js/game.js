@@ -5,6 +5,8 @@
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const specialAudio = new Audio('/Assets/Audio/6777.mp3');
+specialAudio.preload = 'auto';
 
 const GROUND_Y = 150;
 const GRAVITY = 0.6;
@@ -19,14 +21,18 @@ const DINO_DUCK_WIDTH = 52;
 const BASELINE_Y = GROUND_Y + DINO_STAND_HEIGHT; // 213
 
 let dino, obstacles, speed, score, highScore, isRunning, isGameOver, frame;
+let isScoreFrozen = false;
+let freezeEndTime = 0;
 
 const scoreLabel = document.getElementById('scoreLabel');
 const highScoreLabel = document.getElementById('highScoreLabel');
 const startMessage = document.getElementById('startMessage');
 const gameOverMessage = document.getElementById('gameOverMessage');
 const duckButton = document.getElementById('duckButton');
- 
+
 function resetGame() {
+    scoreLabel.classList.remove('rainbow-blink'); // <- CORREÇÃO: limpa o efeito de uma partida anterior
+    isScoreFrozen = false;
     dino = {
         x: 50,
         y: GROUND_Y,
@@ -70,7 +76,7 @@ function jump() {
 
 function startDuck() {
     if (!isRunning || isGameOver) return;
-    if (dino.isJumping) return; 
+    if (dino.isJumping) return;
 
     dino.isDucking = true;
     dino.height = DINO_DUCK_HEIGHT;
@@ -162,8 +168,48 @@ function update() {
     score++;
     if (score % 100 === 0) speed += 0.4;
 
-    scoreLabel.textContent = String(Math.floor(score / 10)).padStart(6, '0');
+    updateScoreDisplay();
 }
+
+// 67777777
+function isSpecialScore(displayScore) {
+    const significant = displayScore.replace(/^0+/, '');
+    return significant.length >= 2 && significant.startsWith('67');
+}
+
+function playSpecialSound() {
+    specialAudio.currentTime = 0; 
+    specialAudio.play();
+}
+
+function getRainbowDurationMs() {
+    const durationText = getComputedStyle(scoreLabel).animationDuration;
+    if (durationText.endsWith('ms')) return parseFloat(durationText);
+    return parseFloat(durationText) * 1000;
+}
+
+function updateScoreDisplay() {
+    const realDisplayScore = String(Math.floor(score / 10)).padStart(6, '0');
+
+    if (isScoreFrozen) {
+        if (performance.now() >= freezeEndTime) {
+            isScoreFrozen = false;
+            scoreLabel.classList.remove('rainbow-blink');
+            scoreLabel.textContent = realDisplayScore;
+        }
+        return;
+    }
+
+    scoreLabel.textContent = realDisplayScore;
+
+    if (isSpecialScore(realDisplayScore)) {
+        isScoreFrozen = true;
+        scoreLabel.classList.add('rainbow-blink');
+        freezeEndTime = performance.now() + getRainbowDurationMs();
+        playSpecialSound();
+    }
+}
+// 
 
 function drawDino() {
     ctx.fillStyle = '#535353';

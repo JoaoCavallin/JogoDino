@@ -28,3 +28,4 @@ C:\Users\JOAOPEDROCAVALLIN\source\repos\DinoGame\obj\Debug\net8.0\refint\DinoGam
 C:\Users\JOAOPEDROCAVALLIN\source\repos\DinoGame\obj\Debug\net8.0\DinoGame.pdb
 C:\Users\JOAOPEDROCAVALLIN\source\repos\DinoGame\obj\Debug\net8.0\DinoGame.genruntimeconfig.cache
 C:\Users\JOAOPEDROCAVALLIN\source\repos\DinoGame\obj\Debug\net8.0\ref\DinoGame.dll
+C:\Users\JOAOPEDROCAVALLIN\source\repos\DinoGame\obj\Debug\net8.0\DinoGame.sourcelink.json
