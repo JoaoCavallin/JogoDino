@@ -273,7 +273,7 @@ function loop() {
     }
 }
 
-async function endGame() {
+ function endGame() {
     isGameOver = true;
     isRunning = false;
     draw();
@@ -285,29 +285,13 @@ async function endGame() {
         highScoreLabel.textContent = `RECORDE: ${highScore}`;
     }
 
-    // envia a pontuação para a API do ASP.NET
-    try {
-        await fetch('/api/score', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ playerName: 'Jogador', score: finalScore })
-        });
-    } catch (err) {
-        console.warn('Não foi possível salvar a pontuação:', err);
-    }
+    // salva a pontuação direto no navegador (sem precisar de servidor)
+    localStorage.setItem('dinoHighScore', String(highScore));
 }
 
-async function loadHighScore() {
-    highScore = 0;
-    try {
-        const res = await fetch('/api/score/top');
-        if (res.ok) {
-            const top = await res.json();
-            if (top.length > 0) highScore = top[0].score;
-        }
-    } catch (err) {
-        console.warn('Não foi possível carregar o recorde:', err);
-    }
+function loadHighScore() {
+    const saved = localStorage.getItem('dinoHighScore');
+    highScore = saved ? parseInt(saved, 10) : 0;
     highScoreLabel.textContent = `RECORDE: ${highScore}`;
 }
 
