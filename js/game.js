@@ -12,6 +12,10 @@ const GROUND_Y = 150;
 const GRAVITY = 0.6;
 const JUMP_FORCE = -9;
 
+const TARGET_FPS = 60;
+const FRAME_INTERVAL = 1000 / TARGET_FPS; // ~16.67ms por frame
+let lastFrameTime = 0;
+
 const DINO_STAND_HEIGHT = 73;
 const DINO_DUCK_HEIGHT = 44;
 const DINO_STAND_WIDTH = 40;
@@ -31,7 +35,7 @@ const gameOverMessage = document.getElementById('gameOverMessage');
 const duckButton = document.getElementById('duckButton');
 
 function resetGame() {
-    scoreLabel.classList.remove('rainbow-blink'); // <- CORREÇÃO: limpa o efeito de uma partida anterior
+    scoreLabel.classList.remove('rainbow-blink'); 
     isScoreFrozen = false;
     dino = {
         x: 50,
@@ -84,7 +88,7 @@ function startDuck() {
     dino.y = GROUND_Y + (DINO_STAND_HEIGHT - DINO_DUCK_HEIGHT);
 }
 
-// Para de agachar, volta ao tamanho normal
+
 function endDuck() {
     if (!dino.isDucking) return;
 
@@ -264,11 +268,22 @@ function draw() {
     drawObstacles();
 }
 
-function loop() {
+function loop(currentTime) {
     if (!isRunning) return;
-    update();
+
+    const elapsed = currentTime - lastFrameTime;
+
+    if (elapsed >= FRAME_INTERVAL) {
+        // "sobra" de tempo é descontada do próximo intervalo, evitando acumular atraso
+        lastFrameTime = currentTime - (elapsed % FRAME_INTERVAL);
+
+        update();
+        if (!isGameOver) {
+            draw();
+        }
+    }
+
     if (!isGameOver) {
-        draw();
         requestAnimationFrame(loop);
     }
 }
